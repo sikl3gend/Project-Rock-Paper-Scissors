@@ -1,84 +1,63 @@
-let computerSelection = ""
-let playerSelection = ""
-let result = ""
-let playerScore = 0
-let computerScore = 0
-
-
-
 function getComputerChoice(){
-
-    const randomInt = Math.floor(Math.random() * 3 );
-    computerSelection = ""
-    if (randomInt === 0){
-        computerSelection = `Rock`
-    }
-    else if (randomInt === 1){
-        computerSelection = `Paper`
-    }
-    else {
-        computerSelection = `Scissors`
-    }
-    return computerSelection
+    const handChoices = ["Rock", "Paper", "Scissors"];
+    let randomInt = Math.floor(Math.random() * 3 );
+    return handChoices[randomInt];
 }
-console.log(getComputerChoice())
 
-function getPlayerChoice (){
+function playRound(playerSelection, computerSelection){
     
-    const randomInt = Math.floor(Math.random() * 3 );
-    playerSelection = ""
-    if (randomInt === 0){
-        playerSelection = `Rock`
+    if (computerSelection === playerSelection){
+        return `It's a tie`;
     }
-    else if (randomInt === 1){
-        playerSelection = `Paper`
+    if (computerSelection === `ROCK` && playerSelection === `SCISSORS`){
+        return `Computer Wins`;
+    }
+    if (computerSelection === `ROCK` && playerSelection === `PAPER`){
+        return `You Win`;
+    }
+    if (computerSelection === `SCISSORS` && playerSelection === `PAPER`){
+        return `Computer Wins`;
+    }
+    if (computerSelection === `SCISSORS` && playerSelection === `ROCK`){
+        return `You Win`;
+    }
+    if (computerSelection === `PAPER` && playerSelection === `ROCK`){
+        return `Computer Wins`;
+    }
+    if (computerSelection === `PAPER` && playerSelection === `SCISSORS`){
+        return `You Win`;
+    }      
+}
+
+function game() {
+        let winCount = 0
+        let loseCount = 0
+        for (i = 0; i < 5; i++) {
+            let playerPick = prompt("Rock, paper, or scissors?").toUpperCase();
+            let computerPick = getComputerChoice().toUpperCase();
+            playRound(playerPick, computerPick);
+            if (playRound(playerPick, computerPick).charAt(1) === `Y`){
+                winCount++;
+            }
+            else if (playRound(playerPick, computerPick).charAt(1) === `C`){
+                loseCount++
+            }
+            else {
+                winCount++
+                loseCount++
+            }
+            console.log("Your pick is: " + playerPick +"." + " " + "Computer picked: " + computerPick + ".");
+            console.log(playRound(playerPick, computerPick));
+    }
+    if (winCount > loseCount){
+        return "You Win!"
+    }
+    else if (winCount > loseCount){
+        return "You lose!"
     }
     else {
-        playerSelection = `Scissors`
+        return ("It's a tie!")
     }
-    return playerSelection
 }
-console.log(getPlayerChoice())
-
-function playRound(computerSelection, playerSelection){
-   
-    if (computerSelection == playerSelection){
-        result = `It's a tie`;
-    }
-    if (computerSelection === `Rock` && playerSelection === `Scissors`){
-        result = `Computer Wins`
-    }
-    if (computerSelection === `Rock` && playerSelection === `Paper`){
-        result = `You Win`
-    }
-    if (computerSelection === `Scissors` && playerSelection === `Paper`){
-        result = `Computer Wins`
-    }
-    if (computerSelection === `Scissors` && playerSelection === `Rock`){
-        result = `You Win`
-    }
-    if (computerSelection === `Paper` && playerSelection === `Rock`){
-        result = `Computer Wins`
-    }
-    if (computerSelection === `Paper` && playerSelection === `Scissors`){
-        result = `You Win`
-    }
-    return result       
-}
-
-console.log(playRound(computerSelection, playerSelection))
-
-function scoreTracker () {
-   
-        for (i = 0; i < 5; i++) {
-            if (result === `You Win`){
-                playerScore++
-            }
-            else if (result === `Computer Wins`) {
-                computerScore++
-            }
-            return playerScore + "-" + computerScore
-        }
-        }   
-
-console.log(scoreTracker(result))
+let result = game()
+console.log(result)
