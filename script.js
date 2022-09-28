@@ -1,40 +1,76 @@
 let playerScore = 0
 let computerScore = 0
+const userScore_span = document.getElementById('user-score');
+const computerScore_span = document.getElementById('computer-score');
+const scoreBoard_div = document.querySelector('.scoreboard');
+const result_div = document.querySelector('.result > p');
+const rock_div = document.getElementById('rock');
+const paper_div = document.getElementById('paper');
+const scissors_div = document.getElementById('scissors');
 
+rock_div.addEventListener('click', () => {
+    playRound('ROCK')
+})
 
+paper_div.addEventListener('click', () => {
+    playRound('PAPER')
+})
+
+scissors_div.addEventListener('click', () => {
+    playRound('SCISSORS')
+})
+
+function isDraw(playerSelection, computerSelection) {
+    result_div.textContent = 'It\'s a tie!'  
+    
+
+}
+
+function isWin(playerSelection) {
+    playerScore++;
+    userScore_span.textContent = playerScore;
+    result_div.textContent = playerSelection + ' beats ' + computerSelection + '. You win!'  
+}
+
+function isLoss(playerSelection) {
+    computerScore++
+    computerScore_span.textContent = computerScore
+    result_div.textContent = playerSelection + ' gets beat by ' + computerSelection + '. You lose!' 
+}
+
+    
+function playRound(playerSelection){
+    let outcome = ''
+    computerSelection = getComputerChoice()
+    console.log(playerSelection)
+    console.log(computerSelection)
+    if (playerSelection === computerSelection){
+        isDraw(playerSelection, computerSelection)
+        }
+    else if ( playerSelection === 'ROCK' && computerSelection === 'SCISSORS'){
+        isWin(playerSelection, computerSelection)
+        outcome = 'Player Wins'
+        
+        }
+    else if ( playerSelection === 'PAPER' && computerSelection === 'ROCK'){
+        isWin(playerSelection, computerSelection)
+        outcome = 'Player Wins'
+        }
+    else if (playerSelection === 'SCISSORS' && computerSelection === 'PAPER'){
+        isWin(playerSelection, computerSelection)
+        outcome = 'Player Wins'
+        }
+    else {
+        isLoss(playerSelection, computerSelection)
+        outcome = 'Computer Wins'
+        }
+    
+}
 
 function getComputerChoice(){
     const handChoices = ["ROCK", "PAPER", "SCISSORS"];
     let randomInt = Math.floor(Math.random() * 3 );
     return handChoices[randomInt];
-}
-
-function playRound(playerSelection, computerSelection){
-    let outcome = ''
-    playerSelection = prompt('Choose rock, paper, or scissors').toUpperCase()
-    computerSelection = getComputerChoice()
-    console.log(playerSelection)
-    console.log(computerSelection)
-    if (playerSelection !== 'ROCK' && playerSelection !== 'PAPER' && playerSelection !== 'SCISSORS'){
-        alert('Please check your spelling and try again!')
-        playRound()
-    }
-    else if (playerSelection === computerSelection){
-        outcome = 'Tie'
-    }
-    else if ( playerSelection === 'ROCK' && computerSelection === 'SCISSORS'){
-        outcome = 'Player Wins'
-    }
-    else if ( playerSelection === 'PAPER' && computerSelection === 'ROCK'){
-        outcome = 'Player Wins'
-    }
-    else if (playerSelection === 'SCISSORS' && computerSelection === 'PAPER'){
-        outcome = 'Player Wins'
-    }
-    else {
-        outcome = 'Computer Wins'
-    }
-    return outcome
 }
 
 function game() {
@@ -59,7 +95,7 @@ function game() {
         console.log('Computer Wins!')
      }
 }
-game()
+
 
 
 
